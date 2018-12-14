@@ -36,38 +36,4 @@ const tab = createBottomTabNavigator(
   }
 );
 
-// const sideMenu = createDrawerNavigator(
-//   {
-//     Screen1: {
-//       screen: One,
-//       navigationOptions: {
-//         drawerLabel: 'Stargate',
-//         drawerIcon: ({ tintColor }) => (
-//           <MaterialIcons name='grade' size={24} style={{ color: tintColor }} />
-//         )
-//       }
-//     },
-//     Screen2: {
-//       screen: Two,
-//       navigationOptions: {
-//         drawerLabel: 'Batman',
-//         drawerIcon: ({ tintColor }) => (
-//           <MaterialIcons name='favorite' size={24} style={{ color: tintColor }} />
-//         )
-//       }
-//     },
-//     Screen3: {
-//       screen: Three,
-//       navigationOptions: {
-//         drawerLabel: 'Spiderman',
-//         drawerIcon: ({ tintColor }) => (
-//           <MaterialIcons name='pets' size={24} style={{ color: tintColor }} />
-//         )
-//       }
-//     }
-//   },
-//   {
-//     initialRouteName: 'Screen1'
-//   }
-// );
 export default createAppContainer(tab);
