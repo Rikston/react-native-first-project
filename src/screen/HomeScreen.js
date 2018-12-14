@@ -44,9 +44,6 @@ export default class HomeScreen extends Component {
         <MyComponent momento='momento' /> */}
         <Head 
           title={title}
-          leftIcon='ios-menu'
-          leftColor='#fff'
-          onPress={()=> navigation.openDrawer()}
         />
         <Layout>
           {

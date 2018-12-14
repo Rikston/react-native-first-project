@@ -40,10 +40,7 @@ export default class HomeScreen extends Component {
         <ImageCard url={'https://github.com/react-native-village/react-native-init/raw/master/stargate/images/Stargate.jpg'} />
         <MyComponent momento='momento' /> */}
         <Head
-          title={title}
-          leftIcon='ios-menu'
-          leftColor='#fff'
-          onPress={()=> navigation.openDrawer()}  
+          title={title} 
         />
         <Layout>
           {
