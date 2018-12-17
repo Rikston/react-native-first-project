@@ -5,11 +5,12 @@ import { w } from '../../services/constants';
 const ImageBigCard = ({ data }) => {
     const { cover, sub, container } = styles;
     const { image } = data;
+    const img = image === null ? 'https://fcrmedia.ie/wp-content/themes/fcr/assets/images/default.jpg' : image.medium;
     if (image) {
         return (
                 <View style={container}>
                     <View style={sub}>
-                        <Image style={cover} source={{ url: image.medium }} />
+                        <Image style={cover} source={{ url: img }} />
                     </View>
                 </View>
         );

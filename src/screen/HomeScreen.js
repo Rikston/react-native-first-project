@@ -3,7 +3,7 @@ import { View, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { Head, ImageCard, Layout, SearchBar } from '../components/uikit/';
 import { STARGATE_DETAILS } from '../routes';
-import { searchChanged } from '../actions';
+import { searchChanged, getMovies } from '../actions';
 
 const url = 'http://api.tvmaze.com/search/shows?q=stargate';
 
@@ -31,10 +31,10 @@ class HomeScreen extends Component {
   }
 
   _onChangeText = (text) => {
-    // console.log(text);
-    this.setState({ value: text });
-    this.props.searchChanged(text);
+    // console.log(text); 
 
+    this.props.searchChanged(text);
+    this.props.getMovies(text);
   }
   shouldComponentUpdate(e) {
     // console.log('shuold component', e);
@@ -42,10 +42,10 @@ class HomeScreen extends Component {
     return true;
   }
   render() {
-    const { title, data, visibleSearchBar } = this.state;
-    const { navigation } = this.props;
-    // console.log(navigation);
-    // console.log(this.props);
+    const { title, visibleSearchBar } = this.state;
+    const { navigation, movie, data } = this.props;
+    // console.log(navigation); 
+    console.log(this.props);
     return (
       <View style={{ flex: 1, backgroundColor: '#fffa3' }}>
         {/* <Header title='asd' />
@@ -60,7 +60,7 @@ class HomeScreen extends Component {
             iconRight="magnify"
             placeholder="Search"
             onChangeText={this._onChangeText}
-            value={this.state.value}
+            value={movie}
             onPressRight={() => this.setState({ visibleSearchBar: false })}
             onBlur={() => this.setState({ visibleSearchBar: true })}
           />
@@ -72,22 +72,30 @@ class HomeScreen extends Component {
             onPressRight={() => this.setState({ visibleSearchBar: true })}
           />
         }
-        <Layout>
-          {
-            //   console.log(data)
-            data.map(item => (
+        { data &&
+          <Layout>
+            {
+              //   console.log(data)
+              data.map(item => (
                 <ImageCard
-                    data={item.show}
-                    key={item.show.id}
-                    onPress={() => navigation.navigate(STARGATE_DETAILS, ({ show: item.show, onGoBack: this.onGoBack }))}
+                  data={item.show}
+                  key={item.show.id}
+                  onPress={() => navigation.navigate(STARGATE_DETAILS, ({ show: item.show, onGoBack: this.onGoBack }))}
                 />
-            ))
-          }
-        </Layout>
+              ))
+            }
+          </Layout>
+        }
       </View>
       // <Header title="Asdq" />
     );
   }
 }
 
-export default connect(null, { searchChanged })(HomeScreen);
+const mapStateToProps = state => {
+  return {
+    movie: state.search.movie,
+    data: state.search.data 
+  };
+};
+export default connect(mapStateToProps, { searchChanged, getMovies })(HomeScreen);

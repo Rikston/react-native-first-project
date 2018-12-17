@@ -5,12 +5,13 @@ import { w } from '../../services/constants';
 const ImageCard = ({ data, onPress }) => {
     const { h1, cover, sub, container } = styles;
     const { name: title, image } = data;
+    const img = image === null ? 'https://fcrmedia.ie/wp-content/themes/fcr/assets/images/default.jpg' : image.medium;
     if (image) {
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={container}>
                     <View style={sub}>
-                        <Image style={cover} source={{ url: image.medium }} />
+                        <Image style={cover} source={{ url: img }} />
                     </View>
                     <Text style={h1}>{title.toUpperCase()}</Text>
                 </View>

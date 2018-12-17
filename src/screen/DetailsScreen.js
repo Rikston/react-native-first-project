@@ -46,6 +46,7 @@ class DetailsScreen extends Component {
         const { detailsContainer, cover, h1, h2, sub } = styles;
         const { navigation } = this.props;
         const { name, summary, image } = navigation.state.params.show;
+        const description = summary === null ? 'Description not available' : summary.replace(/<[^>]+>/g, '');
         // const data = { name, image };
         return (
             <View style={detailsContainer}>
@@ -59,7 +60,7 @@ class DetailsScreen extends Component {
                     <View style={sub}>
                     <ImageBigCard data={{ image }} />
                         <Text style={h1}>{name.toUpperCase()}</Text>
-                        <Text style={h2}>{summary.replace(/<[^>]+>/g, '')}</Text>
+                        <Text style={h2}>{description}</Text>
                     </View>
                 </ScrollView>
             </View>
