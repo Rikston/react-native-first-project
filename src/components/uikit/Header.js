@@ -2,55 +2,74 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { w } from '../../services/constants';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { w, BLUE } from '../../services/constants';
 
 const styles = StyleSheet.create({
-    headerViewStylecontainer: {
+    container: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'flex-end',
-        backgroundColor: 'pink',
-        // paddingHorizontal: 10,
+        backgroundColor: BLUE,
+        paddingHorizontal: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        elevation: 2,
+        position: 'relative',
         ...ifIphoneX({
             height: 100
         },
         {
             height: 60 
         }),
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        elevation: 2,
-        // position: 'relative'
     },
     sub: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
-    headerTextStyle: {
+    textStyle: {
         color: '#fff',
         fontFamily: 'AvenirNext-DemiBold',
         fontSize: 28,
-        width: w - 20
+        width: w - 75
     },
-    leftButtonstyle: {
+    iconLeftStyle: {
         fontSize: 28,
         paddingHorizontal: 10
-    }
+    }  
 });
 
-export function Head({ title, onPress, leftIcon, leftColor }) {
+export function Head({
+     title,
+     iconLeft,
+     iconRight,
+     colorLeft,
+     colorRight,
+     onPressLeft,
+     onPressRight
+    }) {
+    const { container, sub, textStyle, iconLeftStyle } = styles;
     return (
-        <View style={styles.headerViewStylecontainer}>
-        <TouchableOpacity onPress={onPress} style={styles.sub}>
-            <Ionicons name={leftIcon} style={styles.leftButtonstyle} color={leftColor} />
-            <Text
-                style={styles.headerTextStyle}
-                numberOfLines={1}
-                ellipsizeMode='tail'
-            >{title}</Text>
-        </TouchableOpacity>
+        <View style={container}>
+            <View style={sub}>
+                {iconLeft &&
+                    <TouchableOpacity onPress={onPressLeft}>
+                        <Ionicons name={iconLeft} style={[iconLeftStyle, { color: colorLeft }]} />
+                    </TouchableOpacity>
+                }
+                <Text
+                    style={textStyle}
+                    numberOfLines={1}
+                    ellipsizeMode='tail'
+                >{title}</Text>
+                {iconRight &&
+                    <TouchableOpacity onPress={onPressRight}>
+                        <MaterialCommunityIcons name={iconRight} style={[iconLeftStyle, { color: colorRight }]} />
+                    </TouchableOpacity>
+                }
+            </View>
         </View>
     );
 }

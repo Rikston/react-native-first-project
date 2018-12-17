@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Head, ImageCard, Layout } from '../components/uikit/';
+import { View, TextInput } from 'react-native';
+import { connect } from 'react-redux';
+import { Head, ImageCard, Layout, SearchBar } from '../components/uikit/';
 import { STARGATE_DETAILS } from '../routes';
+import { searchChanged } from '../actions';
 
 const url = 'http://api.tvmaze.com/search/shows?q=stargate';
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   state = {
     title: 'Star Gate',
-    data: []
+    data: [],
+    visibleSearchBar: false,
+    value: 'asdq'
   }
 
   componentDidMount = async () => {
@@ -18,22 +22,30 @@ export default class HomeScreen extends Component {
       // eslint-disable-next-line no-undef
       const response = await fetch(url);
       const data = await response.json();
-      console.log(response);
-      console.log(data);
+      // console.log(response);
+      // console.log(data);
       this.setState({ data });
     } catch (e) {
       console.info(e);
     }  
   }
 
-  onGoBack = (someDataFromChildren) => {
-    console.log('info from children', someDataFromChildren);
+  _onChangeText = (text) => {
+    // console.log(text);
+    this.setState({ value: text });
+    this.props.searchChanged(text);
+
+  }
+  shouldComponentUpdate(e) {
+    // console.log('shuold component', e);
+    // console.log('this', this);
+    return true;
   }
   render() {
-    const { title, data } = this.state;
+    const { title, data, visibleSearchBar } = this.state;
     const { navigation } = this.props;
-    console.log(navigation);
-    console.log(this.props);
+    // console.log(navigation);
+    // console.log(this.props);
     return (
       <View style={{ flex: 1, backgroundColor: '#fffa3' }}>
         {/* <Header title='asd' />
@@ -42,9 +54,24 @@ export default class HomeScreen extends Component {
         <MyComponent momento='sdqw' />
         <ImageCard url={'https://github.com/react-native-village/react-native-init/raw/master/stargate/images/Stargate.jpg'} />
         <MyComponent momento='momento' /> */}
-        <Head 
-          title={title}
-        />
+        { visibleSearchBar ?
+          <SearchBar
+            colorRight='#fff'
+            iconRight="magnify"
+            placeholder="Search"
+            onChangeText={this._onChangeText}
+            value={this.state.value}
+            onPressRight={() => this.setState({ visibleSearchBar: false })}
+            onBlur={() => this.setState({ visibleSearchBar: true })}
+          />
+          :
+          <Head 
+            title={title}
+            colorRight={'#fff'}
+            iconRight='magnify'
+            onPressRight={() => this.setState({ visibleSearchBar: true })}
+          />
+        }
         <Layout>
           {
             //   console.log(data)
@@ -62,3 +89,5 @@ export default class HomeScreen extends Component {
     );
   }
 }
+
+export default connect(null, { searchChanged })(HomeScreen);

@@ -3,7 +3,6 @@ import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import { Head, ImageBigCard } from '../components/uikit';
 
-
 const styles = StyleSheet.create({
     detailsContainer: {
         flex: 1,
@@ -52,9 +51,9 @@ class DetailsScreen extends Component {
             <View style={detailsContainer}>
                 <Head
                     title={'back'}
-                    onPress={() => navigation.goBack()}
-                    leftIcon='ios-arrow-back' 
-                    leftColor='#fff' 
+                    onPressLeft={() => navigation.goBack()}
+                    iconLeft='ios-arrow-back' 
+                    colorLeft='#fff' 
                 />
                 <ScrollView>
                     <View style={sub}>
